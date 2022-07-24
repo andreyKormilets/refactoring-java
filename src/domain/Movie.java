@@ -3,13 +3,12 @@ package domain;
 import enums.FilmsGroup;
 
 public class Movie {
-    private String title;
-    private FilmsGroup filmsGroup;
+    private final String title;
+    private final FilmsGroup filmsGroup;
 
     public Movie(String title, FilmsGroup filmsGroup) {
-
         this.title = title;
-        this.filmsGroup= filmsGroup;
+        this.filmsGroup = filmsGroup;
     }
 
     public String getTitle() {
