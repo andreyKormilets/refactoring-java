@@ -9,7 +9,7 @@ import static enums.FilmsGroup.NEW;
 
 public class RentalServiceImpl implements RentalService {
 
-    MoviesRepository moviesRepository;
+    private final MoviesRepository moviesRepository;
 
     public RentalServiceImpl(MoviesRepository moviesRepository) {
         this.moviesRepository = moviesRepository;
@@ -24,7 +24,6 @@ public class RentalServiceImpl implements RentalService {
         for (MovieRental rental : order.getRentals()) {
             Movie currentMovie = moviesRepository.getMovieById(rental.getMovieId());
             double thisFilmAmount = currentMovie.getFilmsGroup().priceMultiplier.apply(rental.getDays());
-
             frequentEnterPoints++;
             if (rental.getDays() > 2 && currentMovie.getFilmsGroup() == NEW)
                 frequentEnterPoints++;

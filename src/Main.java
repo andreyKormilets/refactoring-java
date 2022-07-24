@@ -11,8 +11,6 @@ import java.util.List;
 
 public class Main {
 
-    RentalService rentalService;
-
     public static void main(String[] args) {
 
         MoviesRepository moviesRepository = new MoviesRepositoryImpl();
