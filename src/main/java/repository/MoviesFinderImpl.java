@@ -19,8 +19,8 @@ public class MoviesFinderImpl implements MoviesFinder {
     }
 
     @Override
-    public Movie getMovieById(String id) throws  MovieNotFoundException {
-        if (!movies.containsKey(id)) throw  new MovieNotFoundException();
+    public Movie getMovieById(String id) throws MovieNotFoundException {
+        if (!movies.containsKey(id)) throw new MovieNotFoundException();
         return movies.get(id);
     }
 }
