@@ -1,15 +1,16 @@
 package repository;
 
 import domain.Movie;
+import exception.MovieNotFoundException;
 
 import java.util.HashMap;
 
 import static enums.FilmsGroup.*;
 
-public class MoviesRepositoryImpl implements MoviesRepository {
+public class MoviesFinderImpl implements MoviesFinder {
     private final HashMap<String, Movie> movies;
 
-    public MoviesRepositoryImpl() {
+    public MoviesFinderImpl() {
         this.movies = new HashMap<>();
         movies.put("F001", new Movie("You've Got Mail", REGULAR));
         movies.put("F002", new Movie("Matrix", REGULAR));
@@ -18,7 +19,8 @@ public class MoviesRepositoryImpl implements MoviesRepository {
     }
 
     @Override
-    public Movie getMovieById(String id) {
+    public Movie getMovieById(String id) throws  MovieNotFoundException {
+        if (!movies.containsKey(id)) throw  new MovieNotFoundException();
         return movies.get(id);
     }
 }

@@ -3,26 +3,33 @@ package service;
 import domain.Movie;
 import domain.MovieRental;
 import domain.Order;
-import repository.MoviesRepository;
+import exception.CanNotCreateStatementException;
+import exception.MovieNotFoundException;
+import repository.MoviesFinder;
 
 import static enums.FilmsGroup.NEW;
 
 public class RentalServiceImpl implements RentalService {
 
-    private final MoviesRepository moviesRepository;
+    private final MoviesFinder moviesFinder;
 
-    public RentalServiceImpl(MoviesRepository moviesRepository) {
-        this.moviesRepository = moviesRepository;
+    public RentalServiceImpl(MoviesFinder moviesFinder) {
+        this.moviesFinder = moviesFinder;
     }
 
     @Override
-    public String getStatement(Order order) {
+    public String getStatement(Order order) throws CanNotCreateStatementException {
 
         double totalAmount = 0;
         int frequentEnterPoints = 0;
         StringBuilder result = new StringBuilder("Rental Record for " + order.getCustomer().getName() + "\n");
         for (MovieRental rental : order.getRentals()) {
-            Movie currentMovie = moviesRepository.getMovieById(rental.getMovieId());
+            Movie currentMovie;
+            try {
+                currentMovie = moviesFinder.getMovieById(rental.getMovieId());
+            } catch (MovieNotFoundException e) {
+                throw new CanNotCreateStatementException("MovieNotFoundException");
+            }
             double thisFilmAmount = currentMovie.getFilmsGroup().priceMultiplier.apply(rental.getDays());
             frequentEnterPoints++;
             if (rental.getDays() > 2 && currentMovie.getFilmsGroup() == NEW)
