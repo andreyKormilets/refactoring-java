@@ -30,7 +30,7 @@ public class RentalServiceImpl implements RentalService {
             } catch (MovieNotFoundException e) {
                 throw new CanNotCreateStatementException("MovieNotFoundException");
             }
-            double thisFilmAmount = currentMovie.getFilmsGroup().priceMultiplier.apply(rental.getDays());
+            double thisFilmAmount = currentMovie.getFilmsGroup().getMultiplier(rental.getDays());
             frequentEnterPoints++;
             if (rental.getDays() > 2 && currentMovie.getFilmsGroup() == NEW)
                 frequentEnterPoints++;

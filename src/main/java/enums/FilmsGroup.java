@@ -26,7 +26,11 @@ public enum FilmsGroup {
         double daysMultiplier = 3;
         return (double) days * daysMultiplier;
     });
-    public final Function<Integer, Double> priceMultiplier;
+    private final Function<Integer, Double> priceMultiplier;
+
+    public double getMultiplier(int days) {
+        return this.priceMultiplier.apply(days);
+    }
 
     FilmsGroup(Function<Integer, Double> priceMultiplier) {
         this.priceMultiplier = priceMultiplier;
